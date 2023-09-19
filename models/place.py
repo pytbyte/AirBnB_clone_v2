@@ -1,5 +1,6 @@
 #!/usr/bin/python3
 """This is the place class"""
+from shlex import shlex
 from sqlalchemy.ext.declarative import declarative_base
 from models.base_model import BaseModel, Base
 from sqlalchemy import Column, Table, String, Integer, Float, ForeignKey
@@ -34,3 +35,27 @@ class Place(BaseModel, Base):
     price_by_night = Column(Integer, nullable=False, default=0)
     latitude = Column(Float)
     longitude = Column(Float)
+
+    if getenv("HBNB_TYPE_STORAGE") == "db":
+        reviews = relationship("Review", cascade='all, delete, delete-orphan',
+                               backref="place")
+    else:
+        @property
+        def reviews(self):
+            all_objects = models.storage.all()
+            review_instances = []
+            matching_reviews = []
+
+            # Extract Review instances from the storage
+            for key in all_objects:
+                object_key = key.replace('.', ' ')
+                object_parts = shlex.split(object_key)
+                if object_parts[0] == 'Review':
+                    review_instances.append(all_objects[key])
+
+            # Filter reviews associated with this place
+            for review_instance in review_instances:
+                if review_instance.place_id == self.id:
+                    matching_reviews.append(review_instance)
+
+            return matching_reviews
