@@ -12,6 +12,7 @@ import inspect
 import unittest
 storage_t = getenv("HBNB_TYPE_STORAGE")
 
+
 class test_Amenity(test_basemodel):
     """ """
 
@@ -136,7 +137,6 @@ class TestAmenity(unittest.TestCase):
             self.assertEqual(amenity.name, None)
         else:
             self.assertEqual(amenity.name, None)
-
 
     def test_to_dict_values(self):
         """test that values in dict returned from to_dict are correct"""

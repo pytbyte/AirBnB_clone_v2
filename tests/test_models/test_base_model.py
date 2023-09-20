@@ -137,19 +137,6 @@ class TestCodeFormat(unittest.TestCase):
                          "Found code style errors (and warnings).")
 
 
-class Test_docstrings(unittest.TestCase):
-    """Test docstrings"""
-    @classmethod
-    def setup_class(self):
-        """
-        inspect.getmembers(object, [predicate])
-        Return all the members of an object in a list of (name, value)
-        pairs sorted by name
-        only members for which the predicate returns a true value are included
-        """
-        self.obj_members(BaseModel, inspect.isfunction)
-
-
 class TestBaseModel(unittest.TestCase):
     """this will test the base model class x"""
 
