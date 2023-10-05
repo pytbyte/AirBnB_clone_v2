@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
 # Check if Nginx is installed, and if not, install it
-# Function to install Nginx if not already installed
 install_nginx() {
     if ! command -v nginx &> /dev/null; then
         sudo apt update
@@ -41,6 +40,12 @@ restart_nginx() {
     sudo service nginx restart
 }
 
+# Function to remove existing symbolic link and create a new one
+create_symbolic_link() {
+    rm -rf /data/web_static/current
+    ln -s /data/web_static/releases/test/ /data/web_static/current
+}
+
 # Main script execution
 trap 'exit 0' ERR
 
@@ -49,6 +54,7 @@ create_directories
 create_fake_html
 set_ownership
 update_nginx_config
+create_symbolic_link
 restart_nginx
 
 exit 0
