@@ -7,6 +7,8 @@
 
 ## Learning Objectives you are expected to be able to explain to anyone, without the help of Google:
 
+## serve content via /airbnb-onepage/
+
 # General
 * What is a Web Framework
 * How to build a web framework with Flask
